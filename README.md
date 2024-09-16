@@ -1,1 +1,2 @@
-Pycharm; python versoin: 3.12.3
+Pycharm; python version: 3.12.3
+
