@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="545ef16a-1bb3-477d-a6de-933185c1382d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SquarePants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Square.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SquarePants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SquarePants.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -37,6 +41,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.Main.executor": "Run",
+    "Python.Square.executor": "Run",
     "Python.SquarePants.executor": "Run",
     "Python.Test.executor": "Run",
     "Python.Test1.executor": "Run",
