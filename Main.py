@@ -31,6 +31,9 @@ class ComplexNumber:
         else:
             return "0"
 
+
+_squaredNearly = False
+
 def click(event):
     text = event.widget.cget("text")
     if text == "√":
@@ -79,13 +82,16 @@ def click(event):
                 entry.insert(tk.END, "Error!" )
             else:
                 _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
-                _answer = ComplexNumber(round(_answer.real, 3), round(_answer.imag, 3))
+                _answer = ComplexNumber(round(_answer.real, 10), round(_answer.imag, 10))
 
                 entry.delete(0, tk.END)
                 if (str(_answer) == "0"):
                     entry.insert(tk.END, 0)
                 else:
                     entry.insert(tk.END, f"+-( {_answer} )" )
+
+                global _squaredNearly
+                _squaredNearly = True
 
         except ValueError:
             entry.delete(0, tk.END)
@@ -143,7 +149,14 @@ def click(event):
                 row_val += 1
         root.mainloop()
     else:
-        entry.insert(tk.END, text)
+            # global _squaredNearly
+            if _squaredNearly:
+                entry.delete(0, tk.END)
+                entry.insert(tk.END, text)
+                _squaredNearly = False
+            else:
+                entry.insert(tk.END, text)
+
 
 
 # Создание основного окна
