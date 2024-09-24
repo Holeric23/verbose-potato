@@ -1,5 +1,4 @@
 import cmath
-import math
 
 class ComplexNumber:
     def __init__(self, real, imag):
@@ -23,7 +22,7 @@ class ComplexNumber:
         elif self.real == 0 and self.imag != 0 :
             return f"{_sign} {abs(self.imag)}i"
         else:
-            return ""
+            return "0"
 
 
 
@@ -34,6 +33,14 @@ _error = False
 print("Хз напиши че-нить")
 _input = input()
 
+_input = _input.replace("  "," ") #Удаление двойных пробелов
+
+if _input[0] == " ":
+    _input = _input.replace(" ","",1) #Удаление пробела в начале
+
+if not _input[0] in ["+","-"]: #Если в начале первым знаком стоит цифра, то поставим за него +
+    _input = "+" + _input
+
 _input = _input.replace("+ ","+") #+ и - должны стоять в упор к цифрам
 _input = _input.replace("- ","-")
 
@@ -42,14 +49,6 @@ _input = _input.replace("-"," -")
 
 _input = _input.replace("+i","+1i") #Объяснение концепции переменных для компьютера
 _input = _input.replace("-i","-1i")
-
-_input = _input.replace("  "," ") #Удаление двойных пробелов
-
-if _input[0] == " ":
-    _input = _input.replace(" ","",1) #Удаление пробела в начале
-
-if not _input[0] in ["+","-"]: #Если в начале первым знаком стоит цифра, то поставим за него +
-    _input = "+" + _input
 
 _expressions = _input.split()
 
@@ -70,8 +69,11 @@ else:
     try:
         _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
         _answer = ComplexNumber(round(_answer.real,2),round(_answer.imag,2))
-        print(_answer)
-        print(ComplexNumber(0,0) - _answer)
+        if (str(_answer) == "0"):
+            print(_answer)
+        else:
+            print(_answer)
+            print(ComplexNumber(0,0) - _answer)
     except:
         print("Error2")
 

@@ -29,7 +29,7 @@ class ComplexNumber:
             else:
                 return f"{_sign} {abs(self.imag)}i"
         else:
-            return ""
+            return "0"
 
 def click(event):
     text = event.widget.cget("text")
@@ -44,6 +44,14 @@ def click(event):
             inp=entry.get()
             inp=inp.replace(',','.')
 
+            inp = inp.replace("  ", " ")  # Удаление двойных пробелов
+
+            if inp[0] == " ":
+                inp = inp.replace(" ", "", 1)  # Удаление пробела в начале
+
+            if not inp[0] in ["+", "-"]:  # Если в начале первым знаком стоит цифра, то поставим за него +
+                inp = "+" + inp
+
             inp = inp.replace("+ ", "+")  # + и - должны стоять в упор к цифрам
             inp = inp.replace("- ", "-")
 
@@ -52,14 +60,6 @@ def click(event):
 
             inp = inp.replace("+i", "+1i")  # Объяснение концепции переменных для компьютера
             inp = inp.replace("-i", "-1i")
-
-            inp = inp.replace("  ", " ")  # Удаление двойных пробелов
-
-            if inp[0] == " ":
-                inp = inp.replace(" ", "", 1)  # Удаление пробела в начале
-
-            if not inp[0] in ["+", "-"]:  # Если в начале первым знаком стоит цифра, то поставим за него +
-                inp = "+" + inp
 
             _expressions = inp.split()
 
@@ -76,18 +76,20 @@ def click(event):
 
             if _error:
                 entry.delete(0, tk.END)
-                entry.insert(tk.END, "Error! Please write a correct sentence" )
+                entry.insert(tk.END, "Error!" )
             else:
-                print(_finalNumber)
                 _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
-                _answer = ComplexNumber(round(_answer.real, 2), round(_answer.imag, 2))
+                _answer = ComplexNumber(round(_answer.real, 3), round(_answer.imag, 3))
 
                 entry.delete(0, tk.END)
-                entry.insert(tk.END, f"+-( {_answer} )" )
+                if (str(_answer) == "0"):
+                    entry.insert(tk.END, 0)
+                else:
+                    entry.insert(tk.END, f"+-( {_answer} )" )
 
         except ValueError:
             entry.delete(0, tk.END)
-            entry.insert(tk.END, "Error by trying count")
+            entry.insert(tk.END, "Error!")
             print(ValueError.args)
     elif text == "C":
         entry.delete(0, tk.END)
