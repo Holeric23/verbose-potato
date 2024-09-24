@@ -1,9 +1,7 @@
 import tkinter as tk
 from tkinter import *
 import cmath
-import math
 import webbrowser
-from webbrowser import Error
 
 
 class ComplexNumber:
@@ -37,7 +35,7 @@ def click(event):
     text = event.widget.cget("text")
     if text == "√":
 #Тут код самого вычисления
-        # try:
+        try:
 
             _finalNumber = ComplexNumber(0, 0)
 
@@ -77,7 +75,8 @@ def click(event):
                         _finalNumber.imag += int(expression[:-1])
 
             if _error:
-                print("Error1")
+                entry.delete(0, tk.END)
+                entry.insert(tk.END, "Error! Please write a correct sentence" )
             else:
                 print(_finalNumber)
                 _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
@@ -85,12 +84,11 @@ def click(event):
 
                 entry.delete(0, tk.END)
                 entry.insert(tk.END, f"+-( {_answer} )" )
-                # "\{{0}:<12g\}".format(f"+-( " + str(_answer) + ")")
 
-        # except ValueError:
-        #     entry.delete(0, tk.END)
-        #     entry.insert(tk.END, "Error")
-        #     print(ValueError)
+        except ValueError:
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, "Error by trying count")
+            print(ValueError.args)
     elif text == "C":
         entry.delete(0, tk.END)
     elif text == "SOS":
