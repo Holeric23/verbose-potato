@@ -1,22 +1,96 @@
 import tkinter as tk
 from tkinter import *
+import cmath
 import math
 import webbrowser
+from webbrowser import Error
+
+
+class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+
+    def __add__(self, other):
+        return ComplexNumber(self.real + other.real, self.imag + other.imag)
+
+    def __sub__(self, other):
+        return ComplexNumber(self.real - other.real, self.imag - other.imag)
+
+    def __str__(self):
+        _sign = "+"
+        if self.imag < 0 :
+            _sign = "-"
+        if self.real != 0 and self.imag != 0 :
+            return f"{self.real} {_sign} {abs(self.imag)}i"
+        elif self.real != 0 and self.imag == 0 :
+            return f"{self.real}"
+        elif self.real == 0 and self.imag != 0 :
+            if _sign == "+":
+                return f"{abs(self.imag)}i"
+            else:
+                return f"{_sign} {abs(self.imag)}i"
+        else:
+            return ""
 
 def click(event):
     text = event.widget.cget("text")
     if text == "√":
 #Тут код самого вычисления
-        try:
+        # try:
+
+            _finalNumber = ComplexNumber(0, 0)
+
+            _error = False
+
             inp=entry.get()
             inp=inp.replace(',','.')
-            number = float(inp)
-            result = math.sqrt(number)
-            entry.delete(0, tk.END)
-            entry.insert(tk.END, format(result,".17g"))
-        except ValueError:
-            entry.delete(0, tk.END)
-            entry.insert(tk.END, "Error")
+
+            inp = inp.replace("+ ", "+")  # + и - должны стоять в упор к цифрам
+            inp = inp.replace("- ", "-")
+
+            inp = inp.replace("+", " +")  # Перед + и - должен быть пробел
+            inp = inp.replace("-", " -")
+
+            inp = inp.replace("+i", "+1i")  # Объяснение концепции переменных для компьютера
+            inp = inp.replace("-i", "-1i")
+
+            inp = inp.replace("  ", " ")  # Удаление двойных пробелов
+
+            if inp[0] == " ":
+                inp = inp.replace(" ", "", 1)  # Удаление пробела в начале
+
+            if not inp[0] in ["+", "-"]:  # Если в начале первым знаком стоит цифра, то поставим за него +
+                inp = "+" + inp
+
+            _expressions = inp.split()
+
+            for expression in _expressions:
+                if (not expression[0] in ["+", "-"]) or (expression.count("i") > 1) or (
+                        expression.count("i") > 0 and expression[-1] != "i"):  # Проверкак на криворукость пользователя
+                    _error = True
+                    break
+                else:
+                    if expression.count("i") == 0:
+                        _finalNumber.real += int(expression)
+                    else:
+                        _finalNumber.imag += int(expression[:-1])
+
+            if _error:
+                print("Error1")
+            else:
+                print(_finalNumber)
+                _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
+                _answer = ComplexNumber(round(_answer.real, 2), round(_answer.imag, 2))
+
+                entry.delete(0, tk.END)
+                entry.insert(tk.END, f"+-( {_answer} )" )
+                # "\{{0}:<12g\}".format(f"+-( " + str(_answer) + ")")
+
+        # except ValueError:
+        #     entry.delete(0, tk.END)
+        #     entry.insert(tk.END, "Error")
+        #     print(ValueError)
     elif text == "C":
         entry.delete(0, tk.END)
     elif text == "SOS":
