@@ -76,7 +76,7 @@ def click(event):
 
             if _error:
                 entry.delete(0, tk.END)
-                entry.insert(tk.END, format("Error! Please write a correct sentence","0.17g") )
+                entry.insert(tk.END, "Error! Please write a correct sentence" )
             else:
                 print(_finalNumber)
                 _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
