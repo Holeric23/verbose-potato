@@ -3,7 +3,6 @@ from tkinter import *
 import cmath
 import webbrowser
 
-
 class ComplexNumber:
     def __init__(self, real, imag):
         self.real = real
@@ -36,7 +35,10 @@ _squaredNearly = False
 
 def click(event):
     text = event.widget.cget("text")
+    global _squaredNearly
     if text == "√":
+        if _squaredNearly:
+            return
 #Тут код самого вычисления
         try:
 
@@ -73,16 +75,16 @@ def click(event):
                     break
                 else:
                     if expression.count("i") == 0:
-                        _finalNumber.real += int(expression)
+                        _finalNumber.real += float(expression)
                     else:
-                        _finalNumber.imag += int(expression[:-1])
+                        _finalNumber.imag += float(expression[:-1])
 
             if _error:
                 entry.delete(0, tk.END)
                 entry.insert(tk.END, "Error!" )
             else:
                 _answer = cmath.sqrt(complex(_finalNumber.real, _finalNumber.imag))
-                _answer = ComplexNumber(round(_answer.real, 10), round(_answer.imag, 10))
+                _answer = ComplexNumber(round(_answer.real, 5), round(_answer.imag, 5))
 
                 entry.delete(0, tk.END)
                 if (str(_answer) == "0"):
@@ -90,7 +92,7 @@ def click(event):
                 else:
                     entry.insert(tk.END, f"+-( {_answer} )" )
 
-                global _squaredNearly
+                # global _squaredNearly
                 _squaredNearly = True
 
         except ValueError:
